@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Automation Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+     /* Adjust the sidebar width and height */
+     .sidebar {
+      width: 300px;
+      min-height: 100vh;
+    }
+
+    /* Toggle button styles */
+    .toggle-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: none;
+    }
+
+    @media (max-width: 1000px) {
+      /* Styles for mobile view */
+      .sidebar {
+        display: none;
+      }
+
+      .toggle-button {
+        display: block;
+      }
+    }
+/*  */
+
+.column-chart {
+  position: relative;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 320px;
+  margin-top: 40px;
+  margin-left: -50%;
+}
+
+@media (min-width: 568px) {
+  .column-chart {
+    width: 80%;
+    margin-left: -40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .column-chart {
+    width: 60%;
+    margin-left: -30%;
+  }
+}
+
+@media (min-width: 992px) {
+  .column-chart {
+    width: 40%;
+    margin-left: -20%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .column-chart {
+    width: 36%;
+    margin-left: -18%;
+  }
+}
+
+.column-chart:before,
+.column-chart:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: calc(100% + 30px);
+  height: 25%;
+  margin-left: -15px;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.column-chart:after {
+  top: 50%;
+}
+
+.column-chart > .legend {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+}
+
+.column-chart > .legend.legend-left {
+  left: 0;
+  width: 25px;
+  height: 75%;
+  margin-left: -55px;
+  border: 1px solid #b4b4b5;
+  border-right: none;
+}
+
+.column-chart > .legend.legend-left > .legend-title {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 65px;
+  height: 50px;
+  line-height: 50px;
+  margin-top: -25px;
+  margin-left: -60px;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.column-chart > .legend.legend-right {
+  right: 0;
+  width: 100px;
+  height: 100%;
+  margin-right: -115px;
+}
+
+.column-chart > .legend.legend-right > .item {
+  position: relative;
+  width: 100%;
+  height: 25%;
+}
+
+.column-chart > .legend.legend-right > .item > h4 {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: -20px;
+  font-size: 16px;
+  text-align: right;
+}
+
+.column-chart > .chart {
+  position: relative;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  width: 98%;
+  height: 100%;
+  margin-left: -49%;
+}
+
+.column-chart > .chart > .item {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+
+.column-chart > .chart > .item:before {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: calc(100% + 15px);
+  border-right: 1px  #b4b4b5;
+}
+
+.column-chart > .chart > .item > .bar {
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  width: 94%;
+  height: 100%;
+}
+
+.column-chart > .chart > .item > .bar > span.percent {
+  display: block;
+  position: absolute;
+  z-index: 25;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 26px;
+  line-height: 26px;
+  color: #fff;
+  background-color: #3e50b4;
+  font-size: 8px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.column-chart > .chart > .item > .bar > .item-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 20%;
+  color: #fff;
+  background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+  border-radius: 10px 10px 0 0;
+}
+
+.column-chart > .chart > .item > .bar > .item-progress > .title {
+  position: absolute;
+  top: calc(50% - 13px);
+  left: 50%;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+}
+
+@media (min-width: 360px) {
+  .column-chart > .chart > .item > .bar > .item-progress > .title {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 480px) {
+  .column-chart > .chart > .item > .bar > .item-progress > .title {
+    font-size: 18px;
+  }
+}
+
+
+/*  */
+
+    /* Progress Bar */
+    .progress-pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  position: relative;
+}
+.progress-pie-chart.gt-50 {
+  background: linear-gradient(to bottom,#9D3BB4, #ffa95e);
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+}
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: linear-gradient(to bottom,#9D3BB4, #ffa95e);
+  transform: rotate(60deg);
+}
+.gt-50 .ppc-progress {
+  clip: rect(0, 100px, 200px, 0);
+}
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, 200px, 200px, 100px);
+  background: #f0f0f0;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 173.9130434783px/2);
+  top: calc(50% - 173.9130434783px/2);
+  width: 173.9130434783px;
+  height: 173.9130434783px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+.ppc-percents span {
+  display: block;
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #1e1b39;
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+
+.progress-pie-chart {
+  margin: 50px auto 0;
+}
+
+/* progress bar */
+
+/* Toggle Switch */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #3c366d;
+  -webkit-transition: .4s;
+  transition: .4s;
+  
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #9D3BB4;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px#9D3BB4;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.card {
+  color: #1e1b39;
+  color: #747285;
+  
+}
+
+.card1 {
+  color: #1e1b39;
+  color: #747285;
+  
+}
+
+.card2 {
+  color: #1e1b39;
+  color: #747285;
+  
+}
+
+.card3 {
+  color: #1e1b39;
+  
+   
+}
+
+.card.dark-mode {
+  background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+    color: #fff;
+  }
+
+  .card1.dark-mode{
+    background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+    color: #fff;
+  }
+
+  .card2.dark-mode{
+    background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+    color: #fff;
+  }
+
+  .card3.dark-mode{
+    background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+    color: #fff;
+  }
+ 
+/* toogle switch */
+
+/* hover */
+
+.icon-box {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-box {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px); /* Adjust the distance from the icon */
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.icon-box:hover .hover-box {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hover-text {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* hover */
+
+.power-comsumption-wraper {
+   display: flex;
+   justify-content: flex-end;
+    }
+
+    .confirm-dialog {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background-color: rgba(0, 0, 0, 0.5);
+                  z-index: 9999;
+                }
+                
+                .confirm-box {
+                  background-color: white;
+                  padding: 20px;
+                  border-radius: 5px;
+                  text-align: center;
+                }
+
+
+
+    
+
+  </style>
+  <!-- jQuery -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<!-- Circle Progress JS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js'?></script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+<!--Navbar  -->
+      <div class="col-sm-1 shadow border-0 sidebar" style="border-radius: 0px 30px 30px 0px;background-color: #585858; max-width: 100px;">
+
+            <ul class="nav flex-column pt-5">
+              <li class="nav-item">
+                <a class="nav-link" href="#"><img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt="" style="height: 45px;width: 45px;"> 
+                  <span class="text center" style="font-family: 'Nunito', sans-serif;">Hi Navi!</span>
+                </a>
+              </li>
+              <br>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="Dashboard.html">
+                  <div class="icon-box">
+                    <img src="../static/img/dashboard (3).png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Dashboard</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              
+              
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="devices.html">
+                  <div class="icon-box">
+                    <img src="../static/img/devices.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Devices</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="grantuseraccess.html">
+                  <div class="icon-box">
+                    <img src="../static/img/user-pen.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Grant User Access</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="icon-box">
+                    <img src="../static/img/time-past.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Schedule Devices</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="devicewarranty.html">
+                  <div class="icon-box">
+                    <img src="../static/img/lock.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Devices Warranty</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+               <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="icon-box">
+                    <img src="../static/img/comment-question.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Support</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="icon-box">
+                    <img src="../static/img/settings.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Settings</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <br>
+              <br>
+              <br>
+             
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showConfirmDialog()">
+                  <div class="icon-box">
+                    <img src="../static/img/sign-out-alt.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                    <div class="hover-box" style="z-index: 1;">
+                      <span class="hover-text">Logout</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              
+              <div id="confirmDialog" class="confirm-dialog" style="display: none;">
+                <div class="confirm-box p-3">
+                  <p style="font-family: 'Nunito', sans-serif;">Are you sure you want to logout?</p>
+                  <button onclick="logout()" style="background-color: #9D3BB4;border-radius: 5px;color: #f1f1f5;font-family: 'Nunito', sans-serif;width: 70px; " class="border-0 shadow">Logout</button>
+                  <button onclick="hideConfirmDialog()"  style="background-color: #9D3BB4;border-radius: 5px;color: #f1f1f5; font-family: 'Nunito', sans-serif;" class="border-0 shadow">Cancel</button>
+                </div>
+              </div>
+              
+              <script>
+                function showConfirmDialog() {
+                  document.getElementById("confirmDialog").style.display = "flex";
+                }
+              
+                function hideConfirmDialog() {
+                  document.getElementById("confirmDialog").style.display = "none";
+                }
+              
+                function logout() {
+                  window.location.href = "login.html"; // Replace with the actual logout page URL
+                }
+              </script>
+
+            </ul>
+
+          </div>
+<!-- navbar -->
+      <div class="col ">
+       
+<!-- search -->
+        <div class="row align-items-center">
+          <div class="col-md-3 pt-3 pl-5">
+            <h3 class="text pt-3" style="font-family: 'Nunito', sans-serif;font-size: 30px;color: #1e1b39;font-weight: bold;">WELCOME BACK! Navi</h3>
+            <h5 class="text pl-3" style="font-size: 20px;font-family: 'Nunito', sans-serif;color: #9D3BB4;">Have a Nice Day !</h5 >
+          </div>
+          <div class="col-md-6 ">
+            
+          </div> <!-- Empty column to push the next elements to the right -->
+          <div class="col-md-3 pt-3">
+            <div class="input-group">
+              <input type="text" class="form-control border-0" placeholder="Search" style="background-color: rgb(240, 240, 240);border-radius: 10px;">
+              <div class="input-group-append">
+                <button class="btn" type="button"><img src="../static/img/search.png" alt="" style="height: 20px;width: 20px;"></button>
+                <button class="btn" type="button"><img src="../static/img/bells.png" alt="" style="height: 20px;width: 20px;"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+<!-- search -->
+       
+
+    <!-- CARDS -->
+        <div class="row justify-content-center">
+<!-- devices -->
+          <div class="col-md-8  ">
+            <div class="row pt-3 align-items-center">
+              <div class="col-md-6 pl-5">
+                <h3 class="text" style="color: #1e1b39;font-weight: lighter;font-family: 'Nunito', sans-serif;font-size: 25px;">My Devices</h3>
+              </div>
+              <div class="col-md-6 text-center " style="padding-left: 280px;">
+                <button class="btn "><img src="../static/img/square-plus.png" alt="" style="height: 40px;width: 45px;"></button>
+                <button class="btn " style="background-color: #ffa95e;font-family: 'Nunito', sans-serif;font-weight: bold;">All devices</button>
+              </div>
+              
+            </div>
+            
+            
+            <div class="row pt-3 justify-content-center">
+              <div class="col-md-2.5 p-3">
+                <div class="card shadow border-0" style="border-radius: 25px;">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan</h5>
+                        <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                      </div>
+                      <div class="col">
+                        <div class="col toggle-container">
+                          <label class="switch">
+                            <input type="checkbox" class="toggle-switch">
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pl-3 pr-3 pt-3">
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                      <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2.5 p-3">
+                <div class="card shadow border-0" style="border-radius: 25px;">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan</h5>
+                        <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                      </div>
+                      <div class="col">
+                        <div class="col toggle-container">
+                          <label class="switch">
+                            <input type="checkbox" class="toggle-switch">
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pl-3 pr-3 pt-3">
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                      <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2.5 p-3">
+                <div class="card shadow border-0" style="border-radius: 25px;">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan</h5>
+                        <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                      </div>
+                      <div class="col">
+                        <div class="col toggle-container">
+                          <label class="switch">
+                            <input type="checkbox" class="toggle-switch">
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pl-3 pr-3 pt-3">
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                      <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2.5 p-3">
+                <div class="card shadow border-0" style="border-radius: 25px;">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan</h5>
+                        <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                      </div>
+                      <div class="col">
+                        <div class="col toggle-container">
+                          <label class="switch">
+                            <input type="checkbox" class="toggle-switch">
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pl-3 pr-3 pt-3">
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                      <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                      <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+          
+              <!-- Add more card structures as needed -->
+          
+            </div>
+          
+            <script>
+              // Get all the toggle switches
+              var toggleSwitches = document.querySelectorAll('.toggle-switch');
+          
+              // Add event listeners to each toggle switch
+              toggleSwitches.forEach(function (toggleSwitch) {
+                toggleSwitch.addEventListener('change', function () {
+                  // Find the parent card of the clicked toggle switch
+                  var card = toggleSwitch.closest('.card');
+          
+                  // Toggle the dark-mode class
+                  if (toggleSwitch.checked) {
+                    card.classList.add('dark-mode');
+                  } else {
+                    card.classList.remove('dark-mode');
+                  }
+                });
+              });
+            </script>
+              
+
+             
+          
+            </div>
+            
+<!-- power consumed -->
+
+           <div class="cardpower shadow border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="progress-pie-chart" data-percent="90" style="font-family: 'Nunito', sans-serif;">
+                    <div class="ppc-progress">
+                      <div class="ppc-progress-fill"></div>
+                    </div>
+                    <div class="ppc-percents">
+                      <div class="pcc-percents-wrapper">
+                        <span>%</span>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="col-md-5">
+                  <h4>Power Consumption</h4>
+                  <div class="power-comsumption-wraper">
+                    <div class="power-comsumption-title wow fadeInUp">
+                      <select>
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Yearly</option>
+                        <option>Previous Year</option>
+                      </select>
+                    </div>
+                
+                  </div>
+                  <div class="row">
+                    <div class="legend">
+                      <!-- Add labels or values here -->
+                      <div class="label">100%</div>
+                      <br>
+                      <br>
+                      <div class="label">70%</div>
+                       <br>
+                       <br>
+                      <div class="label">50%</div>
+                     <br>
+                     <br>
+                      <div class="label">30%</div>
+                      <br>
+                      <br>
+                      <div class="label">10%</div>
+                    </div>
+                    <div class="column-chart" >
+
+                      <!-- //.legend -->
+                  
+                  
+                      <!-- //.legend -->
+                  
+                      <div class="chart clearfix">
+                          <div class="item">
+                              <div class="bar">                                    
+                                  <div class="item-progress" data-percent="35">                           
+                                  </div>
+                                  <!-- //.item-progress -->
+                              </div>
+                              <!-- //.bar -->
+                          </div>
+                          <!-- //.item -->
+                  
+                          <div class="item">
+                              <div class="bar">                                     
+                                  <div class="item-progress" data-percent="65">                              
+                                  </div>
+                                  <!-- //.item-progress -->
+                              </div>
+                              <!-- //.bar -->
+                          </div>
+                          <!-- //.item -->
+                  
+                          <div class="item">
+                              <div class="bar">
+                                   <div class="item-progress" data-percent="55">                               
+                                  </div>
+                                  <!-- //.item-progress -->
+                              </div>
+                              <!-- //.bar -->
+                          </div>
+                          <!-- //.item -->
+                  
+                          <div class="item">
+                              <div class="bar">                                      
+                                  <div class="item-progress" data-percent="70">                              
+                                  </div>
+                                  <!-- //.item-progress -->
+                              </div>
+                              <!-- //.bar -->
+                          </div>
+                          <!-- //.item -->
+              
+                          <div class="item">
+                            <div class="bar">                          
+                              <div class="item-progress" data-percent="85">                             
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">
+                               <div class="item-progress" data-percent="65">                           
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">                     
+                                <div class="item-progress" data-percent="55">                  
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">
+                                <div class="item-progress" data-percent="70">                          
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+              
+                        <div class="item">
+                          <div class="bar">
+                             <div class="item-progress" data-percent="55">
+                                  </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+              
+                      <div class="item">
+                          <div class="bar">               
+                             <div class="item-progress" data-percent="70">  
+                                             
+                              </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+                
+                  
+                          <div class="item">
+                              <div class="bar">
+                             
+                  
+                                  <div class="item-progress" data-percent="90">
+                                      
+                                  </div>
+                                  <!-- //.item-progress -->
+                              </div>
+                              <!-- //.bar -->
+                          </div>
+                          <!-- //.item -->
+                      </div>
+                      <!-- //.chart -->
+              
+                      <script>
+                        $(document).ready(function(){
+                            columnChart();
+                            
+                            function columnChart(){
+                                var item = $('.chart', '.column-chart').find('.item'),
+                                itemWidth = 100 / item.length;
+                                item.css('width', itemWidth + '%');
+                                
+                                $('.column-chart').find('.item-progress').each(function(){
+                                    var itemProgress = $(this),
+                                    itemProgressHeight = $(this).parent().height() * ($(this).data('percent') / 100);
+                                    itemProgress.css('height', itemProgressHeight);
+                                });
+                            };
+                        });
+                        </script>
+                  </div>
+                  </div>
+               
+                 </div>
+
+             
+             
+              </div>
+            </div>
+          </div>
+<!-- progress bar JS -->
+          <script>
+            $(function () {
+              $(".progress-pie-chart").each(function () {
+                var $ppc = $(this),
+                  percent = parseInt($ppc.data("percent")),
+                  deg = (360 * percent) / 100;
+                if (percent > 50) {
+                  $ppc.addClass("gt-50");
+                }
+                $(".ppc-progress-fill", $ppc).css("transform", "rotate(" + deg + "deg)");
+                $(".ppc-percents span", $ppc).html(percent + "%");
+              });
+            });
+          </script>
+<!-- Progress bar JS -->
+          
+
+<!-- power consumed -->
+            
+          </div>
+<!-- devices -->
+
+<!-- weather -->
+          <div class="col-md-4 p-3" >
+            <div class="cardweather  border-0" style="height: 750px;" >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title pt-5" style="font-family: 'Nunito', sans-serif;">Today's Weather</h5>
+                  
+                  </div>
+                  <div class="col ju d-flex align-items-center justify-content-end">
+                    <div class="d-flex align-items-center">
+                      <p class="card-text p-3" id="current-time" style="font-family: 'Nunito', sans-serif;">This is</p>
+                      <img src="../static/img/icons8-night-94.png" alt="Weather Icon" id="weather-icon" style="height: 50px; width: 50px;margin-top: -8px;">
+                    </div>
+                  </div>
+                  
+                </div>
+<!-- current time JS -->
+                <script>
+                  // JavaScript code to get the current time and update the content
+                  var currentTime = new Date();
+                  var hours = currentTime.getHours();
+                  var minutes = currentTime.getMinutes();
+                  var ampm = hours >= 12 ? 'PM' : 'AM';
+                  hours = hours % 12 || 12;
+                  minutes = minutes < 10 ? '0' + minutes : minutes;
+                  var timeString = hours + ':' + minutes + ' ' + ampm;
+                  document.getElementById('current-time').textContent = timeString;
+                  
+                  // JavaScript code to change the weather icon dynamically based on time
+                  var weatherIcon = document.getElementById('weather-icon');
+                       if (hours >= 6 && hours < 12) {
+                         // Morning condition
+                         weatherIcon.src = "../static/img/icons8-night-94.png";
+                                              } else if (hours >= 12 && hours < 18) {
+                         // Afternoon condition
+                         weatherIcon.src = "../static/img/istockphoto-1468115559-612x612-removebg-preview.png";
+                                              } else if (hours >= 18 && hours < 24) {
+                         // Evening condition
+                         weatherIcon.src = "../static/img/cloud-with-sun-3d-realistic-weather-icon-isolated-vector-illustration-realistic-3d-icon-design-mobile-app-website_558965-127-removebg-preview.png";
+                                              }                        else {
+                         // Night condition
+                         weatherIcon.src = "../static/img/icons8-sun-48.png";
+                                              }
+                       
+                                       </script>
+ <!--current time JS -->
+                <div class="row">
+                  <div class="col">
+                    <img src="../static/img/cloud-with-sun-3d-realistic-weather-icon-isolated-vector-illustration-realistic-3d-icon-design-mobile-app-website_558965-127-removebg-preview.png" alt="" style="height: 300px;width: 300px;">
+                  </div>
+                  <div class="col p-5">
+                    <h5 class="text" style="font-size: 65px;">28 C </h5>
+                    <h5 class="text">Partly cloudy</h5>
+                    <h5 class="text pt-5">Outdoor Temperature</h5>
+                  </div>
+                  
+                </div>
+                
+
+<!-- Members -->
+                <div class="carduser  ">
+                  <div class="row">
+                      <div class="col-md-2">
+                        <h5 class="text p-3" style="color: #1e1b39;">Members</h5>
+                
+                      </div>
+                      <div class="col">
+                       
+                      </div>
+                      <div class="col-md-2">
+                        
+                      </div>
+                      <div class="col-md-3">
+                        <button class="btn p-3" type="button"><img src="../static/img/angle-square-right.png" alt="" style="height: 30px;width: 30px;"></button>
+                      </div>
+                      
+                  </div>
+                  
+
+                  <div class="card shadow border-0 p-2" style="background-color: #1e1b39;">
+                    <div class="row pl-3 pt-3">
+                      <div class="col">
+                        <div class="row pl-3">
+                          <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt="" style="height: 45px; width: 45px;">
+                          <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                        </div>
+                      </div>
+                    
+                      <div class="col-md-5">
+                        <div class="row pl-3 pt-2">
+                          <div class="col">
+                            <div class="row">
+                              <div class="col">
+                                <h5 class="text" style="font-size: 17px;">Admin</h5>
+                              </div>
+                              <div class="col">
+                                <button class="btn" type="button"><img src="../static/img/edit.png" alt="" style="height: 20px; width: 20px;margin-top: -18px;"></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                   <hr>
+                   <div class="row pl-3 pt-3">
+                    <div class="col">
+                      <div class="row pl-3">
+                        <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt="" style="height: 45px; width: 45px;">
+                        <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                      </div>
+                    </div>
+                  
+                    <div class="col-md-5">
+                      <div class="row pl-3 pt-2">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="text" style="font-size: 17px;">Admin</h5>
+                            </div>
+                            <div class="col">
+                              <button class="btn" type="button"><img src="../static/img/edit.png" alt="" style="height: 20px; width: 20px;margin-top: -18px;"></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                   <hr>
+                   <div class="row pl-3 pt-3">
+                    <div class="col">
+                      <div class="row pl-3">
+                        <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt="" style="height: 45px; width: 45px;">
+                        <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                      </div>
+                    </div>
+                  
+                    <div class="col-md-5">
+                      <div class="row pl-3 pt-2">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="text" style="font-size: 17px;">Admin</h5>
+                            </div>
+                            <div class="col">
+                              <button class="btn" type="button"><img src="../static/img/edit.png" alt="" style="height: 20px; width: 20px;margin-top: -18px;"></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <hr>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<!-- weather -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary toggle-button" onclick="toggleSidebar()"><img src="../static/img/menu-burger (1).png" alt="" height="30px" width="30px"></button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    // Function to toggle the sidebar
+    function toggleSidebar() {
+      $('.sidebar').toggle();
+    }
+  </script>
+</body>
+</html>
+

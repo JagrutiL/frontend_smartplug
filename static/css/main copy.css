@@ -1,0 +1,13 @@
+body {
+   
+    background: linear-gradient(to bottom,#fbf6fc 50% , #9c3ab4 50%  );
+   
+  }
+
+
+  @font-face {
+    font-family: 'YourFontName';
+    src: url('path/to/fontfile.ttf') format('truetype');
+    /* Add additional src declarations for different font file formats if available */
+  }
+

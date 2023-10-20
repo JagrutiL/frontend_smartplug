@@ -1,0 +1,157 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <meta charset="utf-8" />
+  <title>Morris.js Responsive Charts Example + Bootstrap</title>
+</head>
+
+<style>
+.circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+}
+
+.outer-circle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 10px solid #000000;
+  box-sizing: border-box;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: #ffa95e;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Progress Bar */
+.progress-pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  position: relative;
+}
+
+.progress-pie-chart.gt-50 {
+  background: linear-gradient(to bottom, #9D3BB4, #ffa95e);
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+}
+
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: linear-gradient(to bottom, #9D3BB4, #ffa95e);
+  transform: rotate(60deg);
+}
+
+.gt-50 .ppc-progress {
+  clip: rect(0, 100px, 200px, 0);
+}
+
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, 200px, 200px, 100px);
+  background: #f0f0f0;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 173.9130434783px/2);
+  top: calc(50% - 173.9130434783px/2);
+  width: 173.9130434783px;
+  height: 173.9130434783px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+
+.ppc-percents span {
+  display: block;
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #1e1b39;
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.progress-pie-chart {
+  margin: 50px auto 0;
+}
+
+
+
+</style>
+
+<body>
+  <div class="circle">
+    <div class="outer-circle"></div>
+    <div class="progress-pie-chart" data-percent="60" style="font-family: 'Nunito', sans-serif;">
+      <div class="ppc-progress">
+        <div class="ppc-progress-fill"></div>
+      </div>
+      <div class="ppc-percents">
+        <div class="pcc-percents-wrapper">
+          <span>%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- progress bar JS -->
+          <script>
+            $(function () {
+              $(".progress-pie-chart").each(function () {
+                var $ppc = $(this),
+                  percent = parseInt($ppc.data("percent")),
+                  deg = (360 * percent) / 100;
+                if (percent > 50) {
+                  $ppc.addClass("gt-50");
+                }
+                $(".ppc-progress-fill", $ppc).css("transform", "rotate(" + deg + "deg)");
+                $(".ppc-percents span", $ppc).html(percent + "%");
+              });
+            });
+          </script>
+<!-- Progress bar JS -->
+          
+
+</body>
+
+</html>

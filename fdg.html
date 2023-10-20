@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <html lang="en" dir="ltr">
+      <head>
+         <meta charset="utf-8">
+         <title>Circular Progress Bar | CodingNepal</title>
+         <link rel="stylesheet" href="style.css">
+         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script><script  src="./script.js"></script>
+
+      </head>
+      <style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: linear-gradient(to left, #b6bdc2, #ebf4fa);
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50px;
+	height: 38px;
+	width: 66px;
+	box-shadow: 1px 1px 1px rgb(146, 151, 155),
+		6px 7px 3px -3px rgba(146, 151, 155, 0.8),
+		11px 13px 6px -2px rgba(182, 189, 194, 0.5);
+	background: linear-gradient(175deg, #e1e4e7 28%, #92979b 100%);
+	cursor: pointer;
+	transition-property: transform;
+	transition-timing-function: ease-in;
+	transition-duration: 0.6s;
+}
+.circle {
+	height: 30px;
+	width: 27px;
+	margin: 2px;
+}
+.left {
+	border-radius: 60px 66px 66px 60px;
+	box-shadow: inset 0px 0px 1px #cbd0d4;
+	background: linear-gradient(290deg, #e1e4e7 43%, #92979b 190%);
+}
+.right {
+	border-radius: 66px 60px 60px 66px;
+	box-shadow: inset 0px 0px 1px #cbd0d4;
+	background: linear-gradient(280deg, #e1e4e7 10%, #92979b 115%);
+}
+.outer-lane {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	height: 46px;
+	width: 132px;
+	border-radius: 50px;
+	box-shadow: inset -2px -4px 4px #e8ebed, inset 2px 4px 4px #b6bdc2;
+	position: relative;
+}
+.inner-lane {
+	position: absolute;
+	width: 56px;
+	height: 26px;
+}
+
+.white {
+	border-radius: 0px 50px 50px 0px;
+	right: 10px;
+	z-index: -1;
+	box-shadow: inset 0px 0px 1px 1px #808488, inset 0px 0px 4px 0px #808488,
+		inset 7px 9px 10px #e8ebed, inset -3px -8px 8px #92979b;
+	filter: brightness(1);
+}
+.orange {
+	background: linear-gradient(
+		0deg,
+		rgba(198, 128, 0, 1) 25%,
+		rgba(226, 147, 0, 1) 50%,
+		rgba(255, 167, 0, 1) 75%
+	);
+	border-radius: 50px 0px 0px 50px;
+	z-index: -1;
+	left: 10px;
+	box-shadow: inset 2px 1px 1px #c68000, inset 1px 1px 4px #c68000,
+		inset 0px 5px 6px #ffcd71, inset 0px -4px 6px #e29300;
+	filter: brightness(0.8);
+	transition-timing-function: ease-in;
+	transition-duration: 0.6s;
+}
+
+.button.active {
+	transform: translateX(56px);
+	transition-timing-function: ease-in;
+	transition-duration: 0.6s;
+}
+.white.off {
+	filter: brightness(0.8);
+	transition-timing-function: ease-in;
+	transition-duration: 0.6s;
+}
+.orange.on {
+	filter: brightness(1.1);
+	transition-timing-function: ease-in;
+	transition-duration: 0.6s;
+}
+
+      </style>
+      <body>
+        <div class="container">
+          <div class="switch">
+            <div class="outer-lane">
+              <div class="inner-lane white"></div>
+              <div class="inner-lane orange"></div>
+              <div class="button" >
+                <div class="left circle"></div>
+                <div class="right circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+   const button = document.querySelector(".button");
+const white = document.querySelector(".white");
+const orange = document.querySelector(".orange");
+
+function addActiveClass() {
+	button.classList.toggle("active");
+	white.classList.toggle("off");
+	orange.classList.toggle("on");
+}
+button.addEventListener("click", addActiveClass);
+        </script>
+    </body>
+</html>

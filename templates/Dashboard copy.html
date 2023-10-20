@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Automation Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <!-- Custom CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+  </style>
+  <!-- jQuery -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <!-- Circle Progress JS -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js' ?></script>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!--Navbar  -->
+      <div class="col-sm-1 shadow border-0 sidebar"
+        style="border-radius: 0px 30px 30px 0px;background-color: #566BF5; max-width: 100px;">
+
+        <ul class="nav flex-column pt-5">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><img
+                src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt=""
+                style="height: 45px;width: 45px;">
+              
+            </a>
+            <span class=" text " style="font-family: 'Nunito', sans-serif;color: #ffffff;">Hi Navi!</span>
+          </li>
+          <br>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="Dashboard.html">
+              <div class="icon-box">
+                <img src="../static/img/dashboard (1).png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Dashboard</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="devices.html">
+              <div class="icon-box">
+                <img src="../static/img/devices.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Devices</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="grantuseraccess.html">
+              <div class="icon-box">
+                <img src="../static/img/login.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Grant User Access</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <div class="icon-box">
+                <img src="../static/img/history.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Schedule Devices</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="devicewarranty.html">
+              <div class="icon-box">
+                <img src="../static/img/warranty.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Devices Warranty</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <div class="icon-box">
+                <img src="../static/img/help.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Support</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <div class="icon-box">
+                <img src="../static/img/setting.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Settings</span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <br>
+          <br>
+          <br>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showConfirmDialog()">
+              <div class="icon-box">
+                <img src="../static/img/exit.png" alt="" class="icon" style="height: 30px; width: 30px;">
+                <div class="hover-box" style="z-index: 1;">
+                  <span class="hover-text">Logout</span>
+                </div>
+              </div>
+            </a>
+          </li>
+
+<!-- LOGOUT POP UP -->
+          <div id="confirmDialog" class="confirm-dialog" style="display: none;">
+            <div class="confirm-box p-3">
+              <p style="font-family: 'Nunito', sans-serif;">Are you sure you want to logout?</p>
+              <button onclick="logout()"
+                style="background-color: #9D3BB4;border-radius: 5px;color: #f1f1f5;font-family: 'Nunito', sans-serif;width: 70px; "
+                class="border-0 shadow">Logout</button>
+              <button onclick="hideConfirmDialog()"
+                style="background-color: #9D3BB4;border-radius: 5px;color: #f1f1f5; font-family: 'Nunito', sans-serif;"
+                class="border-0 shadow">Cancel</button>
+            </div>
+          </div>
+        </ul>
+      </div>
+      <!-- navbar -->
+      <div class="col ">
+
+        <!-- search -->
+        <div class="row align-items-center">
+          <div class="col-md-9 pt-3 pl-5">
+            <div class="card shadow border-0 position-relative">
+              <img src="../static/img/" alt="Image" class="image-overlap">
+              <h3 class="text pt-3 pl-3 dashboar_profile_text"
+                style="font-family: 'Nunito', sans-serif; font-size: 30px; color: #1e1b39; font-weight: bold;">WELCOME BACK! Navi</h3>
+              <h5 class="text pl-4" style="font-size: 20px; font-family: 'Nunito', sans-serif; color: #9D3BB4;">Have a Nice Day!</h5>
+            </div>
+          </div>
+          
+          
+          <div class="col-md-3 pt-3">
+            <div class="input-group">                             
+              <input type="text" class="form-control border-0" placeholder="Search"
+                style="background-color: rgb(240, 240, 240);border-radius: 10px;">
+              <div class="input-group-append">
+                <button class="btn" type="button"><img src="../static/img/search.png" alt=""
+                    style="height: 20px;width: 20px;"></button>
+                <button class="btn" type="button"><img src="../static/img/bells.png" alt=""
+                    style="height: 20px;width: 20px;"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- search -->
+<br>
+        <!--  -->
+        <div class="row">
+          <!-- card1 devices -->
+          <div class="col-md-9">
+            <div class="card border-0">
+              <div class="row pt-3 align-items-center">
+                <div class="col-md-6 pl-5">
+                  <h3 class="text"
+                    style="color: #1e1b39;font-weight: lighter;font-family: 'Nunito', sans-serif;font-size: 25px;">My
+                    Devices</h3>
+                </div>
+                <div class="col-md-6 text-center " style="padding-left: 280px;">
+                  <button class="btn "><img src="../static/img/add.png" alt=""
+                      style="height: 40px;width: 45px;"></button>
+                  <button class="btn "
+                    style="background-color: #d3d3d3;font-family: 'Nunito', sans-serif;font-weight: bold;">All
+                    devices</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row justify-content-center">
+                  <div class="col-md-2.5 p-3">
+                    <div class="card shadow border-0" style="border-radius: 25px;">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan
+                            </h5>
+                            <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                          </div>
+                          <div class="col">
+                            <div class="col toggle-container">
+                              <label class="switch">
+                                <input type="checkbox" class="toggle-switch">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row pl-3 pr-3 pt-3">
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                          <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                          <span class="text"
+                            style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2.5 p-3">
+                    <div class="card shadow border-0" style="border-radius: 25px;">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan
+                            </h5>
+                            <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                          </div>
+                          <div class="col">
+                            <div class="col toggle-container">
+                              <label class="switch">
+                                <input type="checkbox" class="toggle-switch">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row pl-3 pr-3 pt-3">
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                          <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                          <span class="text"
+                            style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2.5 p-3">
+                    <div class="card shadow border-0" style="border-radius: 25px;">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan
+                            </h5>
+                            <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                          </div>
+                          <div class="col">
+                            <div class="col toggle-container">
+                              <label class="switch">
+                                <input type="checkbox" class="toggle-switch">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row pl-3 pr-3 pt-3">
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                          <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                          <span class="text"
+                            style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2.5 p-3">
+                    <div class="card shadow border-0" style="border-radius: 25px;">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <h5 class="card-title" style="font-family: 'Nunito', sans-serif; font-weight: bold;">Fan
+                            </h5>
+                            <img src="../static/img/fan 1.svg" alt="" style="height: 62px; width: 50px;"><br>
+                          </div>
+                          <div class="col">
+                            <div class="col toggle-container">
+                              <label class="switch">
+                                <input type="checkbox" class="toggle-switch">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row pl-3 pr-3 pt-3">
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">temp.</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                          <span class="text" style="margin-right: 5px; font-family: 'Nunito', sans-serif;">|</span>
+                          <span class="text"
+                            style="margin-right: 10px; font-family: 'Nunito', sans-serif;">Humidity</span>
+                          <span class="text" style="margin-right: 10px; font-family: 'Nunito', sans-serif;">20 C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="card shadow border-0">
+                  Graph
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card1 devices -->
+
+          <!-- card2 weather -->
+          <div class="col">
+            <div class="card shadow border-0" style="border-radius: 25px;background-color: #E7EAFE;color: #7585F7;">
+              <div class="card-body">
+                <!-- First Card -->
+                <div class="row">
+                  <div class="col d-flex align-items-center justify-content-start">
+                    <!-- Add a div for the date with larger font size -->
+                    <div class="date" style="font-size: 34px;">
+                    </div>
+                    <div class="day" style="font-size: 34px;">
+                    </div>
+                  </div>
+                  <div class="col d-flex align-items-center justify-content-end">
+                    <div class="col d-flex align-items-center justify-content-end">
+                      <div class="d-flex align-items-center">
+                        <p class="card-text" id="current-time"
+                          style="font-family: 'Nunito', sans-serif; font-size: 20px;">This is <span></span></p>
+                        <img src="../static/img/icons8-night-94.png" alt="Weather Icon" id="weather-icon"
+                          style="height: 30px; width: 30px;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <!-- Second Card -->
+            <div class="card shadow border-0" style="border-radius: 25px;background-color: #FFEDE6;">
+              <div class="card-body">
+                <!-- First Row in the Second Card -->
+                <div class="row pl-3 pt-3">
+                  <div class="col">
+                    <div class="row pl-3">
+                      <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt=""
+                        style="height: 45px; width: 45px;">
+                      <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                    </div>
+                  </div>
+
+                  <div class="col-md-5">
+                    <div class="row pl-3 pt-2">
+                      <div class="col">
+                        <div class="row justify-content-end">
+                          <h5 class="text" style="font-size: 17px;">Admin <span>
+                              <button class="btn" type="button"><img src="../static/img/edit (2).png" alt=""
+                                  style="height: 20px; width: 20px;margin-top: -18px;"></button></span></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pl-3 pt-3">
+                  <div class="col">
+                    <div class="row pl-3">
+                      <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt=""
+                        style="height: 45px; width: 45px;">
+                      <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="row pl-3 pt-2">
+                      <div class="col">
+                        <div class="row justify-content-end">
+                          <h5 class="text" style="font-size: 17px;">Admin <span>
+                              <button class="btn" type="button"><img src="../static/img/edit (2).png" alt=""
+                                  style="height: 20px; width: 20px;margin-top: -18px;"></button></span></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pl-3 pt-3">
+                  <div class="col">
+                    <div class="row pl-3">
+                      <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt=""
+                        style="height: 45px; width: 45px;">
+                      <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="row pl-3 pt-2">
+                      <div class="col">
+                        <div class="row justify-content-end">
+                          <h5 class="text" style="font-size: 17px;">Admin <span>
+                              <button class="btn" type="button"><img src="../static/img/edit (2).png" alt=""
+                                  style="height: 20px; width: 20px;margin-top: -18px;"></button>
+                            </span></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pl-3 pt-3">
+                  <div class="col">
+                    <div class="row pl-3">
+                      <img src="../static/img/182-1829287_cammy-lin-ux-designer-circle-picture-profile-girl.png" alt=""
+                        style="height: 45px; width: 45px;">
+                      <h5 class="text-center pl-3 pt-2" style="color: #ffa95e;">jagruti</h5>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row pl-3 pt-2">
+                      <div class="col">
+                        <div class="row justify-content-end">
+                          <h5 class="text" style="font-size: 17px;">Admin <span>
+                              <button class="btn" type="button"><img src="../static/img/edit (2).png" alt=""
+                                  style="height: 20px; width: 20px;margin-top: -18px;"></button>
+                            </span></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card2weather -->
+        </div>
+
+        <!--  -->
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <button class="btn btn-primary toggle-button" onclick="toggleSidebar()"><img src="../static/img/menu-burger (1).png"
+      alt="" height="30px" width="30px"></button>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function toggleSidebar() {                                                                    
+      $('.sidebar').toggle();
+    }
+  </script>
+
+  <script src="../static/js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body {
+    background-color: #f2f2f2;
+    color: #000;
+    font-family: 'Roboto', sans-serif;
+}
+
+.column-chart {
+  position: relative;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 320px;
+  margin-top: 40px;
+  margin-left: -50%;
+}
+
+@media (min-width: 568px) {
+  .column-chart {
+    width: 80%;
+    margin-left: -40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .column-chart {
+    width: 60%;
+    margin-left: -30%;
+  }
+}
+
+@media (min-width: 992px) {
+  .column-chart {
+    width: 40%;
+    margin-left: -20%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .column-chart {
+    width: 36%;
+    margin-left: -18%;
+  }
+}
+
+.column-chart:before,
+.column-chart:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: calc(100% + 30px);
+  height: 25%;
+  margin-left: -15px;
+  border-top: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.column-chart:after {
+  top: 50%;
+}
+
+.column-chart > .legend {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+}
+
+.column-chart > .legend.legend-left {
+  left: 0;
+  width: 25px;
+  height: 75%;
+  margin-left: -55px;
+  border: 1px solid #b4b4b5;
+  border-right: none;
+}
+
+.column-chart > .legend.legend-left > .legend-title {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 65px;
+  height: 50px;
+  line-height: 50px;
+  margin-top: -25px;
+  margin-left: -60px;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.column-chart > .legend.legend-right {
+  right: 0;
+  width: 100px;
+  height: 100%;
+  margin-right: -115px;
+}
+
+.column-chart > .legend.legend-right > .item {
+  position: relative;
+  width: 100%;
+  height: 25%;
+}
+
+.column-chart > .legend.legend-right > .item > h4 {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: -20px;
+  font-size: 16px;
+  text-align: right;
+}
+
+.column-chart > .chart {
+  position: relative;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  width: 98%;
+  height: 100%;
+  margin-left: -49%;
+}
+
+.column-chart > .chart > .item {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+
+.column-chart > .chart > .item:before {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: calc(100% + 15px);
+  border-right: 1px  #b4b4b5;
+}
+
+.column-chart > .chart > .item > .bar {
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  width: 94%;
+  height: 100%;
+}
+
+.column-chart > .chart > .item > .bar > span.percent {
+  display: block;
+  position: absolute;
+  z-index: 25;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 26px;
+  line-height: 26px;
+  color: #fff;
+  background-color: #3e50b4;
+  font-size: 8px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.column-chart > .chart > .item > .bar > .item-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 20%;
+  color: #fff;
+  background: linear-gradient(to bottom, #ffa95e, #9D3BB4);
+  border-radius: 10px 10px 0 0;
+}
+
+.column-chart > .chart > .item > .bar > .item-progress > .title {
+  position: absolute;
+  top: calc(50% - 13px);
+  left: 50%;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+}
+
+@media (min-width: 360px) {
+  .column-chart > .chart > .item > .bar > .item-progress > .title {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 480px) {
+  .column-chart > .chart > .item > .bar > .item-progress > .title {
+    font-size: 18px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+	<div class="row">
+        <div class="col-md-9">
+
+
+         <div class="row justify-content-center" style="align-items: end;">
+          <div class="power-comsumption-wraper">
+            <div class="power-comsumption-title wow fadeInUp">
+              <h4>Power Consumption</h4>
+              <select>
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Yearly</option>
+                <option>Previous Year</option>
+              </select>
+            </div>
+          </div>
+         </div>
+           
+
+          <div class="row">
+                   <!-- //.text-center -->
+            
+                   <div class="column-chart">
+                
+                    <!-- //.legend -->
+                
+                
+                    <!-- //.legend -->
+                
+                    <div class="chart clearfix">
+                        <div class="item">
+                            <div class="bar">                                    
+                                <div class="item-progress" data-percent="35">                           
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">                                     
+                                <div class="item-progress" data-percent="65">                              
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">
+                                 <div class="item-progress" data-percent="55">                               
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                
+                        <div class="item">
+                            <div class="bar">                                      
+                                <div class="item-progress" data-percent="70">                              
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+    
+                        <div class="item">
+                          <div class="bar">                          
+                            <div class="item-progress" data-percent="85">                             
+                              </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+              
+                      <div class="item">
+                          <div class="bar">
+                             <div class="item-progress" data-percent="65">                           
+                              </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+              
+                      <div class="item">
+                          <div class="bar">                     
+                              <div class="item-progress" data-percent="55">                  
+                              </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+              
+                      <div class="item">
+                          <div class="bar">
+                              <div class="item-progress" data-percent="70">                          
+                              </div>
+                              <!-- //.item-progress -->
+                          </div>
+                          <!-- //.bar -->
+                      </div>
+                      <!-- //.item -->
+    
+                      <div class="item">
+                        <div class="bar">
+                           <div class="item-progress" data-percent="55">
+                                </div>
+                            <!-- //.item-progress -->
+                        </div>
+                        <!-- //.bar -->
+                    </div>
+                    <!-- //.item -->
+            
+                    <div class="item">
+                        <div class="bar">                   
+                           <div class="item-progress" data-percent="70">                           
+                            </div>
+                            <!-- //.item-progress -->
+                        </div>
+                        <!-- //.bar -->
+                    </div>
+                    <!-- //.item -->
+              
+                
+                        <div class="item">
+                            <div class="bar">
+                           
+                
+                                <div class="item-progress" data-percent="90">
+                                    
+                                </div>
+                                <!-- //.item-progress -->
+                            </div>
+                            <!-- //.bar -->
+                        </div>
+                        <!-- //.item -->
+                    </div>
+                    <!-- //.chart -->
+                </div>
+                <!-- //.column-chart -->
+          </div>
+     
+        </div>
+        <!-- //.col-md-6 -->
+    </div>
+    <!-- //.row -->
+
+    <div class="row">
+      <div class="col-md-12">
+          <div class="month-labels " >
+              <div class="label" style="color: #000;">Jan</div>
+              <div class="label" style="color: #000;">Feb</div>
+              <div class="label" style="color: #000;">Mar</div>
+              <div class="label" style="color: #000;">Apr</div>
+              <div class="label" style="color: #000;">May</div>
+              <div class="label" style="color: #000;">Jun</div>
+              <div class="label" style="color: #000;">Jul</div>
+              <div class="label" style="color: #000;">Aug</div>
+              <div class="label" style="color: #000;">Sep</div>
+              <div class="label" style="color: #000;">Oct</div>
+              <div class="label" style="color: #000;">Nov</div>
+              <div class="label" style="color: #000;">December</div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- //.container -->
+
+
+</div>
+<!-- //.container -->
+
+
+<script>
+$(document).ready(function(){
+    columnChart();
+    
+    function columnChart(){
+        var item = $('.chart', '.column-chart').find('.item'),
+        itemWidth = 100 / item.length;
+        item.css('width', itemWidth + '%');
+        
+        $('.column-chart').find('.item-progress').each(function(){
+            var itemProgress = $(this),
+            itemProgressHeight = $(this).parent().height() * ($(this).data('percent') / 100);
+            itemProgress.css('height', itemProgressHeight);
+        });
+    };
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<div class="cardcircle shadow border-0 p-5">
+  <div class="progress-pie-chart" data-percent="90" style="font-family: 'Nunito', sans-serif;">
+    <div class="ppc-progress">
+      <div class="ppc-progress-fill"></div>
+    </div>
+    <div class="ppc-percents">
+      <div class="pcc-percents-wrapper">
+        <span>%</span>
+      </div>
+    </div>
+  </div>
+</div>
