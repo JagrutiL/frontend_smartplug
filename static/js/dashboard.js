@@ -3,38 +3,70 @@ var currentTime = new Date();
 var hours = currentTime.getHours();
 var minutes = currentTime.getMinutes();
 var ampm = hours >= 12 ? 'PM' : 'AM';
-hours = hours % 12 || 12;
-minutes = minutes < 10 ? '0' + minutes : minutes;
-var timeString = hours + ':' + minutes + ' ' + ampm;
-document.getElementById('current-time').textContent = timeString;
+  function updateBackgroundColor() {
+    const card = document.getElementById('color-changing-card');
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
 
-// JavaScript code to update the day and date
-var dayElement = document.querySelector('.day');
-var dateElement = document.querySelector('.date');
-var weatherIcon = document.getElementById('weather-icon');
+    if (currentHour >= 6 && currentHour < 12) {
+      // Morning: Change the background color to a morning theme
+      card.style.backgroundColor = '#FFECC8';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      // Afternoon: Change the background color to an afternoon theme
+      card.style.backgroundColor = '#A6C2EB';
+    } else {
+      // Evening/Night: Change the background color to an evening/night theme
+      card.style.backgroundColor = '#2C3E50';
+    }
+  }
 
-var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-var day = days[currentTime.getDay()];
-var date = currentTime.getDate(); // Get the day of the month (e.g., 20)
+  // Call the function to set the initial background color
+  updateBackgroundColor();
 
-dayElement.textContent = day;
-dateElement.textContent = date + ', '; // Add a comma after the date
+  // Update the background color every minute
+  setInterval(updateBackgroundColor, 60000);
 
-// JavaScript code to change the weather icon dynamically based on time
-var weatherIcon = document.getElementById('weather-icon');
-if (hours >= 6 && hours < 12) {
+  function updateDateTime() {
+    const currentTime = new Date();
+    const hours = currentTime.getHours() % 12 || 12;
+    const minutes = currentTime.getMinutes();
+    const ampm = currentTime.getHours() >= 12 ? 'PM' : 'AM';
+
+    var timeString = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + ampm;
+    document.getElementById('current-time').textContent = timeString;
+
+    var dayElement = document.querySelector('.day');
+    var dateElement = document.querySelector('.date');
+
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var day = days[currentTime.getDay()];
+    var date = currentTime.getDate(); // Get the day of the month (e.g., 20)
+
+    dayElement.textContent = day;
+    dateElement.textContent = date + ', '; // Add a comma after the date
+  }
+
+  // Call the function to set the initial date and time
+  updateDateTime();
+
+  // Update the date and time every minute
+  setInterval(updateDateTime, 60000);
+
+  // JavaScript code to change the weather icon dynamically based on time
+  var weatherIcon = document.getElementById('weather-icon');
+  var hours = new Date().getHours();
+
+  if (hours >= 6 && hours < 12) {
     // Morning condition
-    weatherIcon.src = "../static/img/icons8-night-94.png";
-} else if (hours >= 12 && hours < 18) {
+    weatherIcon.src = "../static/img/icons8-sun-48.png";
+  } else if (hours >= 12 && hours < 18) {
     // Afternoon condition
     weatherIcon.src = "../static/img/istockphoto-1468115559-612x612-removebg-preview.png";
-} else if (hours >= 18 && hours < 24) {
-    // Evening condition
-    weatherIcon.src = "../static/img/cloud-with-sun-3d-realistic-weather-icon-isolated-vector-illustration-realistic-3d-icon-design-mobile-app-website_558965-127-removebg-preview.png";
-} else {
+  } else {
     // Night condition
-    weatherIcon.src = "../static/img/icons8-sun-48.png";
-}
+    weatherIcon.src = "../static/img/icons8-night-94.png";
+  }
+
 
 // TOGGLE DEVICES
 
