@@ -1,8 +1,388 @@
-body {
-   
-    background: linear-gradient(to bottom,#fbf6fc  , #9c3ab4  );
-   
+
+.dashboard_container {
+  background-color: #566BF5;
+  max-width: 100px;
+  border-radius: 0px 30px 30px 0px;
+
+  width: 300px;
+  min-height: 100vh;
+}
+
+@media (max-width: 1000px) {
+
+  /* Styles for mobile view */
+  .dashboard_container {
+    display: none;
   }
 
+  .dashboard_togglebutton {
+    display: block;
+  }
+}
+
+.dashboard_togglebutton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: none;
+}
+
+.dashboard_switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.dashboard_toggleswitch {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.dashboard_slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #322D71;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.dashboard_slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.dashboard_profilepic {
+  height: 45px;
+  width: 45px;
+}
+
+/* ************* */
+input:checked+.dashboard_slider {
+  background-color: #F97B45;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px#9D3BB4;
+}
+
+input:checked+.dashboard_slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.dashboard_slider.dashboard_round {
+  border-radius: 34px;
+}
+
+.dashboard_slider.dashboard_round:before {
+  border-radius: 50%;
+}
+
+/* ************** */
+.dashboard_card {
+  color: #1e1b39;
+  color: #747285;
+
+}
+
+.dashboard_iconbox {
+  position: relative;
+  display: inline-block;
+}
+
+.dashboard_iconbox:hover .dashboard_hoverbox {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dashboard_hoverbox {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 10px);
+  /* Adjust the distance from the icon */
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dashboard_hovertext {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+.dashboard_profilename {
+  font-family: 'Nunito', sans-serif;
+  color: #ffffff;
+}
+
+.dashboard_dashboardicon {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_index {
+  z-index: 1;
+}
+
+.dashboard_pcicon {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_loginpic {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_history {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_warrantypic {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_help {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_setting {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_exit {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_conformdialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.dashboard_confirm-dialog {
+  display: none;
+
+}
+
+.dashboard_confirmbox {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dashboard_imageoverlap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  /* You can set the image width and height as needed */
+  width: 200px;
+  height: 200px;
+  /* Adjust the margin and padding to control the positioning */
+
+}
+
+.dashboard_surelogout {
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_logout {
+  background-color: #9D3BB4;
+  border-radius: 5px;
+  color: #f1f1f5;
+  font-family: 'Nunito', sans-serif;
+  width: 70px;
+}
+
+.dashboard_cancel {
+  background-color: #9D3BB4;
+  border-radius: 5px;
+  color: #f1f1f5;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_search {
+  background-color: rgb(240, 240, 240);
+  border-radius: 10px;
+}
+
+.dashboard_searchicon {
+  height: 20px;
+  width: 20px;
+}
+
+.dashboard_bellicon {
+  height: 20px;
+  width: 20px;
+}
+
+.dashboard_welcomeback {
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px;
+  color: #1e1b39;
+  font-weight: bold;
+}
+
+.dashboard_haveaniceday {
+  font-size: 20px;
+  font-family: 'Nunito', sans-serif;
+  color: #9D3BB4;
+}
+
+.dashboard_mydevice {
+
+
+  color: #1e1b39;
+  font-weight: lighter;
+  font-family: 'Nunito', sans-serif;
+  font-size: 25px;
+}
+
+.dashboard_addalldevice {
+  padding-left: 280px;
+}
+
+.dashboard_addiconpng {
+  height: 40px;
+  width: 45px;
+}
+
+.dashboard_alldevice {
+  background-color: #d3d3d3;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
+
+.dashboard_container2 {
+  border-radius: 25px;
+}
+
+.dashboard_fan {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
+
+.dashboard_fanimg {
+  height: 62px;
+  width: 50px;
+}
+
+.toggle-container {
+  // Define styles for toggle switches
+}
+
+.dashboard_temp {
+  margin-right: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_tempvalue {
+
+  margin-right: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_line {
+  margin-right: 5px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_humidity {
+  margin-right: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_tempvalue2 {
+  margin-right: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dashboard_catetime {
+  border-radius: 25px;
+  background-color: #E7EAFE;
+  color: #7585F7;
+}
+
+.dashboard_date1 {
+  font-size: 34px;
+}
+
+.dashboard_day1 {
+  font-size: 34px;
+}
+
+.dashboard_thisis {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+}
+
+.dashboard_weathericon {
+  height: 30px;
+  width: 30px;
+}
+
+.dashboard_container5 {
+  border-radius: 25px;
+  background-color: #FFEDE6;
+}
+
+.dashboard_groupmemberion {
+  height: 45px;
+  width: 45px;
+}
+
+.dashboard_groupmenbername {
+  color: #ffa95e;
+}
+
+.dashboard_admin {
+  font-size: 17px;
+}
+
+.dashboard_adminedit {
+  height: 20px;
+  width: 20px;
+}
+
+.toggle-button {
+  // Define styles for the toggle button
+}
 
 
